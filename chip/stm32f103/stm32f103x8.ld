@@ -11,23 +11,24 @@
  * be handled with valid stack.
  * *************************************************************************************************************************************************/
 
-ENTRY(Reset_Handler)
+ENTRY(Reset_Handler) 	// Entry point of an application, so it is the first executable instruction in the output file (first byte of .elf or executable file)
 
+// Memory declares memory regions with attributes specifying whether the region can be read from, written to or executable. 
 MEMORY {
-	FLASH(rx) : ORIGIN = 0x08000000, LENGTH = 64k
-	RAM(rwx) : ORIGIN = 0x20000000, LENGTH = 20k
+	FLASH(rx) : ORIGIN = 0x08000000, LENGTH = 64k   // Flash memory size is 64 KB
+	RAM(rwx)  : ORIGIN = 0x20000000, LENGTH = 20k    // RAM memory size is 20 KB
 }
 
 SECTIONS {
 	.text :
 	{
-		KEEP(*(.isr_vector))
-		*(.startup*)
+		KEEP(*(.isr_vector))		// Keep statement tells the linker, keep the section even if no symbols inside are referenced.
+		*(.startup*)			
 		*(.text*)
 		*(.rodata*)
 	} > FLASH
 
-	.ARM.exidx :
+	.ARM.exidx :             // ARM index table, used for stack unwinding (walking back up the chain of function calls)
 	{
 		*(.ARM.exidx*)
 	} > FLASH
@@ -41,7 +42,7 @@ SECTIONS {
 		_edata = .;
 	} > RAM AT > FLASH
 
-	_sidata = LOADADDR(.data);
+	_sidata = LOADADDR(.data);	// address of data section in flash memory
 
 	.bss :
 	{
@@ -58,13 +59,13 @@ SECTIONS {
 	end = .;
 	__end = .;
 
-
-     ._stack_check {
-	     . = ALIGN(8);
+     // Checking minimum 1 kb of stack is available to continue, if not linker will throw error
+      ._stack_check {
+	     . = ALIGN(8);	// Stack pointer should be aligned to 8 byte according to ARM calling standard
 	     . = . + 0x400;     /* minimum 1 kb for the main stack */
 	     . = ALIGN(8);
 	} > RAM
 
      }
 
-    _eram = ORIGIN(RAM) + LENGTH(RAM);
+    _eram = ORIGIN(RAM) + LENGTH(RAM);	// end of RAM address, since RAM grows downward (pushing a value will decrease the stack pointer by 4)
