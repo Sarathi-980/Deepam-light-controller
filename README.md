@@ -1,6 +1,6 @@
 # Deepam Light Controller
 
-Deepam Light Controller is a autonomous controller for solar-powered light for temple use. It drives the battery powered LED lamp, detecting dusk and dawn from a light sensor and controlling LED brightness using PWM on a dusk-relative schedule.
+Deepam controls a solar-powered LED lamp for the temple use, adjusting its brightness through the night based on the energy harvested during the day. Many temples are run by small groups or families who bear the cost of overnight lighting; Deepam lets them keep the lamp lit using solar energy and provides efficient energy usage using autonomous lighting.
 
 > **Status:** In development
 
