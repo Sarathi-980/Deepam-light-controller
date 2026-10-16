@@ -20,7 +20,7 @@
 #define configTICK_RATE_HZ				(100)	// 10 ms tick
 #define configMAX_PRIORITIES				(5)	// 0 to 4 priorities
 #define configMINIMAL_STACK_SIZE			(128) 	// stack size minimum in words
-#define configTICK_TYPE_WIDTH_IN_BITS(0)	// 32 bit tick count
+#define configTICK_TYPE_WIDTH_IN_BITS			(0)	// 32 bit tick count
 #define configIDLE_SHOULD_YIELD				(1) 	// No application uses priority 0, so default config
 
 #define configCPU_CLOCK_HZ   				BOARD_SYSCLK_HZ	  

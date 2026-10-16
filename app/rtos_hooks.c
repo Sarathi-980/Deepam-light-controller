@@ -22,7 +22,7 @@
  */
 
 static StaticTask_t idle_task_tcb;
-static StaticTask_t idle_task_stack[configMINIMAL_STACK_SIZE];
+static StackType_t idle_task_stack[configMINIMAL_STACK_SIZE];
 
 void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, 
 		StackType_t **ppxIdleTaskStackBuffer, configSTACK_DEPTH_TYPE *puxIdleTaskStackSize)
