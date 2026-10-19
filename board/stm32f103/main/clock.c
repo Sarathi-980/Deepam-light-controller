@@ -1,9 +1,6 @@
-#include "board_config.h"
 #include <stdint.h>
+#include "clock.h"
 
-#define RCC_CR_REG	(*(volatile uint32_t*) 0x40021000)
-#define RCC_CFG_REG	(*(volatile uint32_t*) (RCC_CR_REG + 0x4))
-#define FLASH_ACR_REG	(*(volatile uint32_t*) 0x40022000)
 
 // I use 0xFFFF timeout, we can increase timeout.
 #define CLOCK_WAIT_STATE(condition)	({							\
@@ -16,11 +13,11 @@
 								}				\
 								count--;			\
 							} while (count > 0);			\
-							cond_met				\
+							cond_met;				\
 						})
 
 
-uint32_t g_system_clock_hz = 8000000U;
+uint32_t  g_system_clock_freq= 8000000U;
 
 
 

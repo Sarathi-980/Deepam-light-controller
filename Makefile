@@ -13,6 +13,7 @@ LINKERSCRIPT := board/stm32f103/stm32f103x8.ld
 C_FILES   := 	$(wildcard app/*.c) \
 		$(wildcard app/src/*.c) \
 	   	$(wildcard board/stm32f103/*.c) \
+		$(wildcard board/stm32f103/main/*.c) \
 		$(wildcard board/*.c) \
 		$(FREERTOS)/tasks.c \
 		$(FREERTOS)/queue.c \
@@ -21,7 +22,7 @@ C_FILES   := 	$(wildcard app/*.c) \
 		$(FREERTOS)/event_groups.c \
 		$(PORT)/port.c
 
-INCLUDES := -Iconfig -Iapp -Iapp/src -Iboard/stm32f103 -Iboard -I$(FREERTOS)/include -I$(PORT)
+INCLUDES := -Iconfig -Iapp -Iapp/inc -Iboard/stm32f103/inc -Iboard -I$(FREERTOS)/include -I$(PORT)
 
 OBJS := $(addprefix $(BUILD)/, $(C_FILES:.c=.o))
 
