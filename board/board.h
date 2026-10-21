@@ -2,15 +2,13 @@
 #define BOARD_H
 
 #include "board_config.h"
-
-typedef enum {
-        RESULT_OK,
-        RESULT_FAIL,
-} result_t;
+#include "clock.h"
+#include "gpio.h"
 
 typedef enum {
 	BOARD_CLOCK_INIT_FAIL = (1 << 0),
 } board_state_t;
 
 
+result_t board_init();
 #endif /* BOARD_H */

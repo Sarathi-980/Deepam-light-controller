@@ -6,23 +6,27 @@
 
 #include <stdint.h>
 #include "clock.h"
+#include "board_status.h"
+#include "board_config.h"
 
 /* APB2 peripheral clock enables, I/O ports A to E, AFIO, ADC1, ADC2, SPI1, TIM1, USART1 */
 #define GPIO_APB2_ENABLE_REG	(*(volatile uint32_t*) 0x40021018)
 
 
-
+#define PORT_A_CFGL_REG		(*(volatile uint32_t*) 0x40010800)
+#define PORT_A_CFGH_REG		(*(volatile uint32_t*) 0x40010804)
+#define PORT_A_BSRR_REG		(*(volatile uint32_t*) 0x40010810)
 #define PORT_C_CFGL_REG         (*(volatile uint32_t*) 0x40011000)
 #define PORT_C_CFGH_REG         (*(volatile uint32_t*) 0x40011004)
 #define PORT_C_BSRR_REG         (*(volatile uint32_t*) 0x40011010)
 
 
 static inline void gpio_led_on() {
-        PORT_C_BSRR_REG = (1U << (13U + 16U));
+        PORT_C_BSRR_REG = (1U << (LED_PORTC_IO_PIN + 16U));
 }
 
 static inline void gpio_led_off() {
-        PORT_C_BSRR_REG = (1U << 13U);
+        PORT_C_BSRR_REG = (1U << LED_PORTC_IO_PIN);
 }
 
 typedef enum {
@@ -38,4 +42,5 @@ typedef enum {
 	OUTPUT_MODE_SPEED_50MHZ
 } gpio_output_mode_t;
 
-result_t configure_gpio_led();
+void gpio_init();
+result_t gpio_led_init();

@@ -1,7 +1,7 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
-#include "board.h"
+#include "board_status.h"
 
 #define RCC_CR_REG      (*(volatile uint32_t*) 0x40021000)
 #define RCC_CFG_REG     (*(volatile uint32_t*) 0x40021004)

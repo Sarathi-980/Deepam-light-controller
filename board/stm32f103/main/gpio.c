@@ -1,15 +1,23 @@
 #include "gpio.h"
 
+
+static uint32_t gpio_init_flag = 0;
 /*
  * the gpio_init function for initializing common requirements for GPIO
  *
  */
-result_t gpio_init(void) {
-	RCC_APB2_EN_REG |= (1U << 4U);
-	return RESULT_OK;	
+void gpio_init(void) {
+	if (gpio_init_flag) {
+		return;
+	}
+	/* Enabling I/O port A and port C */
+	RCC_APB2_EN_REG |= (1U << 4U) | (1U << 2U) | (1U << 0U);
+	gpio_init_flag = 1;	
 }
 
 result_t gpio_led_init(void) {
+	gpio_init();
+
 	/* each port has 4 bits, first two for I/O mode with speed and next two I/O mode configuration
 	 * here I wrote OUTPUT_2MHZ_SPEED for mode setting and PUSH_PULL (0) for port configuration for port 13
 	 */
@@ -17,3 +25,10 @@ result_t gpio_led_init(void) {
 	return RESULT_OK;
 }
 
+result_t gpio_usart1_tx_init(void) {
+	gpio_init();
+	
+	/* Setting port A output 2 MHz mode and AFIO push pull */
+	PORT_A_CFGH_REG |= (PORT_A_CFGH_REG & ~(0xFU << 4U)) | (2U << 6U) | (OUTPUT_MODE_SPEED_2MHZ << 4U);
+	return RESULT_OK;
+}
