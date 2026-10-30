@@ -10,4 +10,6 @@ extern uint32_t g_system_clock_freq;
 
 #define BOARD_SYSCLK_HZ         (g_system_clock_freq)
 
+#define LOGGER_TASK_PRIORITY	(4U)
+
 #endif /* board_config_h */
