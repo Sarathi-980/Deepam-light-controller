@@ -17,7 +17,7 @@
 
 
 typedef struct {
-	uint32_t tick;
+	uint32_t second;
 	uint8_t level;
 	uint8_t id;
 	int32_t value;
@@ -27,5 +27,6 @@ typedef struct {
 void usart1_init();
 
 result_t usart1_write(const char* buf, const size_t len);
+
 
 #endif /* UART_H */

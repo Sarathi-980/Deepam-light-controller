@@ -5,9 +5,12 @@
 #include <string.h>
 #include <stdio.h>
 #include "board_config.h"
+#include "device_uptime.h"
 
 static StaticQueue_t sLogQueue;
 static QueueHandle_t loggerQueue;
+
+#define LOGGER_MAX_FAIL			(30U)
 
 #define LOGGER_TASK_STACK_SIZE		(256U)
 
@@ -24,7 +27,7 @@ static void logger_task(void* arg)
 
 	while (1) {
 		if (xQueueReceive(loggerQueue, &current_log, portMAX_DELAY) == pdPASS) {
-			size_t len = snprintf(log_buf, sizeof(log_buf), "Msg ID: %u, value: %ld\r\n", current_log.id, current_log.value);
+			size_t len = snprintf(log_buf, sizeof(log_buf), "Sec: %lu, Msg ID: %u, value: %ld\r\n", current_log.second, current_log.id, current_log.value);
 			usart1_write(log_buf, len);
 		}
 	}
@@ -48,19 +51,17 @@ result_t logger_init() {
 	return RESULT_OK;
 }
 
-result_t log_send(uint8_t msg_id, int32_t value) 
+result_t log_send(uint8_t msg_id, int32_t value)
 {
-	log_record_t log = {
-		.tick = xTaskGetTickCount(),
-		.id = msg_id,
-		.value = value,
-	};
-
+        log_record_t rec = {
+                .second  = get_uptime_seconds(),
+                .id    = msg_id,
+                .value = value,
+        };
 	if (loggerQueue) {
-		if (xQueueSend(loggerQueue, (void*) &log, 0) == pdPASS) {
-			return RESULT_OK;
-		}
+        	if (xQueueSend(loggerQueue, &rec, 0) == pdPASS) {
+                	return RESULT_OK;
+        	}
 	}
-
-	return RESULT_FAIL;
+        return RESULT_FAIL;
 }

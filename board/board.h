@@ -9,6 +9,7 @@ typedef enum {
 	BOARD_CLOCK_INIT_FAIL = (1 << 0),
 } board_state_t;
 
-
 result_t board_init();
+
+
 #endif /* BOARD_H */

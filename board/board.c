@@ -2,6 +2,7 @@
 
 static uint32_t board_state = 0;
 
+
 result_t board_init(void) {
 	result_t res = clock_init();
 	if (res != RESULT_OK) {
@@ -12,3 +13,5 @@ result_t board_init(void) {
 
 	return RESULT_OK;
 }
+
+

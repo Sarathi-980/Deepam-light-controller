@@ -4,6 +4,7 @@
 typedef enum {
         RESULT_OK,
         RESULT_FAIL,
+	RESULT_NOT_AVAILABLE,
 } result_t;
 
 
